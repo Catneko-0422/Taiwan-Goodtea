@@ -11,7 +11,8 @@
 </head>
 <body>
     <header>
-        @if (1 == 0)
+        @if (User.Identity != null && User.Identity.IsAuthenticated &&
+        User.Identity.Name == "Admin123")
         {
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container-fluid">
@@ -26,6 +27,19 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                             </li>
                         </ul>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <p class="" style="margin-top: 10px; font-size:15px;"> 歡迎, @(User.Identity.Name == "Admin123" ? "管理員" : User.Identity.Name) </p>
+                                </li>
+                                <li class="nav-item">
+                                    <form asp-controller="Home" asp-action="Logout" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-link nav-link text-dark">登出</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        }
                     </div>
                 </div>
             </nav>

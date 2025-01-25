@@ -10,7 +10,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: url('/img/Home/login/background-img.jpg');
+    background-image: url('/img/Home/global/background-img.jpg');
     background-size: cover;
 }
 
@@ -103,16 +103,4 @@ p {
     text-decoration: none;
     color: #fff;
     font-weight: bold;
-}
-
-/*手機*/
-@media (max-width: 600px) {
-}
-
-/*平板*/
-@media (mix-width: 601px) and (max-width: 1024px) {
-}
-
-/*電腦*/
-@media (mix-width: 1025px) {
 }
