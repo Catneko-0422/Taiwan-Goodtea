@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "註冊";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/Home/register.css" />
+}
+@section Scripts {
+    <script src="~/js/Home/register.js"></script>
+}
+
+
+<div class="glass-container">
+    <div class="register-box">
+        <h2>註冊</h2>
+        <form asp-controller="Home" asp-action="Login" method="post">
+            <input type="text" id="username" name="username" required placeholder="使用者名稱">
+
+            <input type="email" id="email" name="email" required placeholder="電子郵件">
+
+            <input type="password" id="password" name="password" required placeholder="密碼">
+
+            <input type="password" id="confirmpassword" name="confirmpassword" required placeholder="確認密碼">
+
+            <div class="form-group">
+                <label for="Role">角色</label>
+                <select class="form-control" id="Role" name="Role">
+                    <option value="Judge">裁判</option>
+                    <option value="Participant">參賽者</option>
+                </select>
+            </div>
+
+            <button type="submit">註冊</button>
+            <p>已有帳號? <a id="login" asp-area="" asp-controller="Home" asp-action="Login">登入</a></p>
+        </form>
+    </div>
+</div>
