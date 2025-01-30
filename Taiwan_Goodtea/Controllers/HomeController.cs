@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Taiwan_Goodtea.api;
 using Taiwan_Goodtea.Models;
 using static Taiwan_Goodtea.Models.UserLoginModel;
 
@@ -16,13 +17,15 @@ namespace Taiwan_Goodtea.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly EmailService _emailService;
 
-        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager)
+        public HomeController(ILogger<HomeController> logger, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, SignInManager<IdentityUser> signInManager, EmailService emailService)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _roleManager = roleManager;
             _logger = logger;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -91,7 +94,7 @@ namespace Taiwan_Goodtea.Controllers
                     await _userManager.AddToRoleAsync(user, model.Role);
 
                     TempData["Success"] = "註冊成功！";
-                    return RedirectToAction("Login", "Account");
+                    return RedirectToAction("Home", "Account");
                 }
 
                 foreach (var error in result.Errors)
@@ -133,6 +136,10 @@ namespace Taiwan_Goodtea.Controllers
 
             // 假設這裡是發送郵件的地方（真實應用中需使用郵件服務發送）
             System.Diagnostics.Debug.WriteLine($"重設密碼連結：{resetLink}");
+
+            string subject = "重設密碼連結";
+            string body = $"<p>請點擊以下連結重設密碼：</p><a href=\"{resetLink}\">{resetLink}</a>";
+            await _emailService.SendEmailAsync(email, subject, body);
 
             return RedirectToAction("ForgotPasswordConfirmation");
         }
